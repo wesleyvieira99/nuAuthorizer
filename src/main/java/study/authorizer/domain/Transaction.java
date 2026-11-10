@@ -10,12 +10,14 @@ public record Transaction (
 ) {
 
     public Transaction {
-        Objects.requireNonNull(merchant, "merchant must be not null!");
-        if(merchant.isBlank()) {
-            throw new IllegalArgumentException("merchant must be not blank");
+        Objects.requireNonNull(merchant, "merchant must not be null");
+        Objects.requireNonNull(time, "time must not be null");
+
+        if (merchant.isBlank()) {
+            throw new IllegalArgumentException("merchant must not be blank");
         }
-        if(amount < 0) {
-            throw new IllegalArgumentException("value must be greater than zero");
+        if (amount <= 0) {
+            throw new IllegalArgumentException("amount must be greater than zero");
         }
 
     }

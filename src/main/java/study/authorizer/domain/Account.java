@@ -19,12 +19,23 @@ public record Account(
     }
 
     //Factory Method for create a clean Account without transactions history
-    public Account create(boolean active, int availableLimit) {
+    public static Account create(boolean active, int availableLimit) {
         return new Account(active, availableLimit, List.of());
     }
 
     //Wither pure functional: creates and returns a new Account updating the availableLimit and updating history
     public Account recordTransaction(Transaction transaction) {
+
+        if (transaction == null) {
+            throw new IllegalArgumentException("transaction must not be null");
+        }
+        if (!active) {
+            throw new IllegalStateException("account is inactive");
+        }
+        if (transaction.amount() > availableLimit) {
+            throw new IllegalArgumentException("insufficient limit");
+        }
+
         var updatedHistory = new ArrayList<Transaction>(this.history.size() + 1);
         updatedHistory.addAll(this.history);
         updatedHistory.add(transaction);

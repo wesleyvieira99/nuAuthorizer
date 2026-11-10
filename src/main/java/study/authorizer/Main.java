@@ -18,11 +18,12 @@ public class Main {
         var tx = new Transaction("Uber", 30, LocalDateTime.now());
 
         //Create an Account
-        var acc = new Account(true, 200, List.of(tx));
+        var acc = Account.create(true, 200);
+        var updatedAccount = acc.recordTransaction(tx);
 
         System.out.println("Account with transaction created with success!");
-        System.out.println("Ativa: " + acc.active());
-        System.out.println("Limite Disponível: " + acc.availableLimit());
-        System.out.println("Histórico de Transações: " + acc.history().size());
+        System.out.println("Ativa: " + updatedAccount.active());
+        System.out.println("Limite Disponível: " + updatedAccount.availableLimit());
+        System.out.println("Histórico de Transações: " + updatedAccount.history().size());
     }
 }
